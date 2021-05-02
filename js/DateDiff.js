@@ -3,20 +3,8 @@ function DateDiff() {
 
 DateDiff.diff = function (date1Str, date2Str) {
 
-	let dateParts1 = date1Str.split(' ');
-	let dateParts2 = date2Str.split(' ');
-	let parsed1 = dateParts1[0].split('/');
-	let parsed2 = dateParts2[0].split('/');
-	let date1 = {
-		day: parseInt(parsed1[0]),
-		month: parseInt(parsed1[1]),
-		year: parseInt(parsed1[2])
-	};
-	let date2 = {
-		day: parseInt(parsed2[0]),
-		month: parseInt(parsed2[1]),
-		year: parseInt(parsed2[2])
-	};
+	let date1 = DateDiff.parseData(date1Str)
+	let date2 = DateDiff.parseData(date2Str)
 
 	let result = {
 		months: date2.month - date1.month,
@@ -31,13 +19,26 @@ DateDiff.diff = function (date1Str, date2Str) {
 	if (result.months > 0 && date1.day > date2.day) {
 		result.months--;
 	}
-
-
-
 	
 	return result;
 	//return { years: 3, months: 2, days: 1, hours: 4, minutes: 5 };
 };
+
+
+DateDiff.parseData = function (dateStr) {
+	let dataAndTime = dateStr.split(' ');
+
+	let data = dataAndTime[0].split('/');
+	let time = dataAndTime[1].split(':');
+
+	return {
+		day: parseInt(data[0]),
+		month:parseInt(data[1]),
+		year:parseInt(data[2]),
+		hour: parseInt(time[0]),
+		minutes:parseInt(time[1]),
+	}
+}
 
 /*
  * @return A number between 0 (inclusive) and 11 (inclusive).
